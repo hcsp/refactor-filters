@@ -24,40 +24,55 @@ public class User {
         return name;
     }
 
-    // 过滤ID为偶数的用户
-    public static List<User> filterUsersWithEvenId(List<User> users) {
+
+    public static List<User> filter(List<User> users,Predicate<User> predicate){
         List<User> results = new ArrayList<>();
         for (User user : users) {
-            if (user.id % 2 == 0) {
+            if (predicate.test(user)) {
                 results.add(user);
             }
         }
         return results;
+    }
+
+//    private interface Verdict{
+//        boolean cd(User user);
+//    }
+
+    // 过滤ID为偶数的用户
+//    public static class EvenIdfilter implements Verdict{
+//
+//        @Override
+//        public boolean cd(User user) {
+//            return user.id % 2 == 0;
+//        }
+//    }
+    public static List<User> filterUsersWithEvenId(List<User> users)  {
+        return filter(users, user -> user.id % 2 == 0);
     }
 
     // 过滤姓张的用户
+//    public static  class NameZhang implements Verdict{
+//
+//        @Override
+//        public boolean cd(User user) {
+//            return user.name.startsWith("张");
+//        }
+//    }
     public static List<User> filterZhangUsers(List<User> users) {
-        List<User> results = new ArrayList<>();
-        for (User user : users) {
-            if (user.name.startsWith("张")) {
-                results.add(user);
-            }
-        }
-        return results;
+        return filter(users, user -> user.name.startsWith("张"));
     }
 
     // 过滤姓王的用户
+//    public static class NameWang implements Verdict{
+//
+//        @Override
+//        public boolean cd(User user) {
+//            return user.name.startsWith("王");
+//        }
+//    }
     public static List<User> filterWangUsers(List<User> users) {
-        List<User> results = new ArrayList<>();
-        for (User user : users) {
-            if (user.name.startsWith("王")) {
-                results.add(user);
-            }
-        }
-        return results;
+        return filter(users, user -> user.name.startsWith("王"));
     }
-    // 你可以发现，在上面三个函数中包含大量的重复代码。
-    // 请尝试通过Predicate接口将上述代码抽取成一个公用的过滤器函数
-    // 并简化上面三个函数
-    public static List<User> filter(List<User> users, Predicate<User> predicate) {}
+
 }
