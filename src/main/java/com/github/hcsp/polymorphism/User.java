@@ -27,9 +27,6 @@ public class User{
         return name;
     }
     //定义好User对象，以及对象中的参数的构造器
-    //1.实现对Id为偶数的User过滤
-    //思路：对User.Id进行是否为偶数的判断，predicate接口用于接收一个输入参数，返回一个boolean类型值
-
     public static List<User> filterUserWithEvenId(List<User> list){
         return filter(list, user -> (user.id %2==0));
     }//实现对偶数进行过滤
@@ -40,7 +37,7 @@ public class User{
 
     public static List<User> filterUserNameStartwithZhang(List<User> list) {
         return filter(list, user -> user.name.startsWith("张"));
-    }//实现对姓王的进行过滤
+    }//实现对姓张的进行过滤
 
 
 
