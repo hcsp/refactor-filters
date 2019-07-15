@@ -30,7 +30,7 @@ public class User {
     static class filterUsersWithEvenId implements Predicate<User> {
         @Override
         public boolean test(User o) {
-            return user.getId() % 2 == 0;
+            return o.getId() % 2 == 0;
         }
     }
     public static List<User> filterZhangUsers(List<User> users) {
