@@ -47,7 +47,7 @@ public class User {
             if (predicate.test(user)) {
                 userList.add(user);
             }
-            return userList;
         }
+        return userList;
     }
 }
