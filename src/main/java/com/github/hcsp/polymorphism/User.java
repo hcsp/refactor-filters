@@ -1,6 +1,7 @@
 package com.github.hcsp.polymorphism;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -16,6 +17,14 @@ public class User {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
@@ -23,41 +32,68 @@ public class User {
     public String getName() {
         return name;
     }
-
-    // 过滤ID为偶数的用户
-    public static List<User> filterUsersWithEvenId(List<User> users) {
+    public static List<User> filter(List<User> users,判断条件是否成立 条件){
         List<User> results = new ArrayList<>();
         for (User user : users) {
-            if (user.id % 2 == 0) {
+            if (条件.这个用户是否满足条件(user)) {
                 results.add(user);
             }
         }
+        System.out.println(results);
         return results;
+    }
+    public interface 判断条件是否成立 {
+         boolean 这个用户是否满足条件(User user);
+
+
+    }
+//    private static class 判断ID是否为偶数 implements 判断条件是否成立{
+//
+//        @Override
+//        public boolean 这个用户是否满足条件(User user) {
+//            return user.id%2==0;
+//        }
+//    }
+//    private static class 判断这个用户是否姓张 implements 判断条件是否成立{
+//
+//        @Override
+//        public boolean 这个用户是否满足条件(User user) {
+//            return user.name.startsWith("张");
+//        }
+//    }
+//    private static class 判断这个用户是否姓王 implements 判断条件是否成立 {
+//        @Override
+//        public boolean 这个用户是否满足条件(User user) {
+//            return user.name.startsWith("王");
+//        }
+//    }
+
+    public static void main(String[] args) {
+        filterUsersWithEvenId(Arrays.asList(new User(1,"a"),new User(2,"b")));
+        filterZhangUsers(Arrays.asList(new User(1,"张无忌"),new User(2,"胡凯波")));
+        filterWangUsers(Arrays.asList(new User(12,"王五"),new User(2,"胡凯杨")));
+    }
+    // 过滤ID为偶数的用户
+    public static List<User> filterUsersWithEvenId(List<User> users) {
+        return  filter(users, user -> user.id%2==0);
+
     }
 
     // 过滤姓张的用户
     public static List<User> filterZhangUsers(List<User> users) {
-        List<User> results = new ArrayList<>();
-        for (User user : users) {
-            if (user.name.startsWith("张")) {
-                results.add(user);
-            }
-        }
-        return results;
+        return filter(users, user -> user.name.startsWith("张"));
     }
 
     // 过滤姓王的用户
     public static List<User> filterWangUsers(List<User> users) {
-        List<User> results = new ArrayList<>();
-        for (User user : users) {
-            if (user.name.startsWith("王")) {
-                results.add(user);
-            }
-        }
-        return results;
+        return filter(users, user -> user.name.startsWith("王"));
     }
+
+
     // 你可以发现，在上面三个函数中包含大量的重复代码。
     // 请尝试通过Predicate接口将上述代码抽取成一个公用的过滤器函数
     // 并简化上面三个函数
-    public static List<User> filter(List<User> users, Predicate<User> predicate) {}
+//    public static List<User> filter(List<User> users, Predicate<User> predicate) {}
+
+
 }
