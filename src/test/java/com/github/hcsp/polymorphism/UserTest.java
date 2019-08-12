@@ -24,18 +24,4 @@ public class UserTest {
                         .map(User::getName)
                         .collect(Collectors.toList()));
     }
-
-    @Test
-    public void testCompareToConvention() {
-        // https://github.com/hcsp/fix-comparable-bug/pull/27/files
-        User a = new User(1, "zhangsan");
-        User b = new User(2, "zhangsan");
-        if (a.compareTo(b) < 0) {
-            Assertions.assertTrue(a.compareTo(b) > 0);
-        } else if (a.compareTo(b) > 0) {
-            Assertions.assertTrue(a.compareTo(b) < 0);
-        } else {
-            Assertions.assertTrue(false);
-        }
-    }
 }
