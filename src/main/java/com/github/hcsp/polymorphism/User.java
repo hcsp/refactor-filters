@@ -26,7 +26,7 @@ public class User {
     }
 
 
-     public static List<User> filter(List<User> users, Predicate predicate ){
+     public static List<User> filter(List<User> users, Predicate<User> predicate ){
          List<User> results = new ArrayList<>();
          for (User user : users) {
              if (predicate.test(user)) {
