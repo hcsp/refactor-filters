@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class User {
-    /** 用户ID，数据库主键，全局唯一 */
+    /**
+     * 用户ID，数据库主键，全局唯一
+     */
     private final Integer id;
 
-    /** 用户名 */
+    /**
+     * 用户名
+     */
     private final String name;
 
     public User(Integer id, String name) {
@@ -27,7 +31,7 @@ public class User {
 
     // 过滤ID为偶数的用户
     public static List<User> filterUsersWithEvenId(List<User> users) {
-       return filter(users, user -> user.id%2==0);
+        return filter(users, user -> user.id % 2 == 0);
     }
 
     // 过滤姓张的用户
@@ -45,14 +49,15 @@ public class User {
     // 并简化上面三个函数
     public static List<User> filter(List<User> users, Predicate<User> predicate) {
         List<User> results = new ArrayList<>();
-        for (User element: users) {
-            if(predicate.test(element)){
+        for (User element : users) {
+            if (predicate.test(element)) {
                 results.add(element);
             }
         }
         return results;
     }
-    public interface Predicate<User>{
+
+    public interface Predicate<User> {
         boolean test(User user);
     }
 }
