@@ -30,32 +30,17 @@ public class User {
 
     // 过滤ID为偶数的用户
     public static List<User> filterUsersWithEvenId(List<User> users) {
-        return filter(users, new Predicate<User>() {
-            @Override
-            public boolean test(User user) {
-                return user.getId() % 2 == 0;
-            }
-        });
+        return filter(users, user -> user.getId() % 2 == 0);
     }
 
     // 过滤姓张的用户
     public static List<User> filterZhangUsers(List<User> users) {
-        return filter(users, new Predicate<User>() {
-            @Override
-            public boolean test(User user) {
-                return user.name.startsWith("张");
-            }
-        });
+        return filter(users, user -> user.name.startsWith("张"));
     }
 
     // 过滤姓王的用户
     public static List<User> filterWangUsers(List<User> users) {
-        return filter(users, new Predicate<User>() {
-            @Override
-            public boolean test(User user) {
-                return user.name.startsWith("王");
-            }
-        });
+        return filter(users, user -> user.name.startsWith("王"));
     }
 
     // 你可以发现，在上面三个函数中包含大量的重复代码。
