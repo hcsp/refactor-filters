@@ -30,69 +30,50 @@ public class User {
         return name;
     }
 
-    //这个函数的目的是传入用户和条件，返回符合条件的用户的集合
-    public static List<User> filter(List<User> users, 判断条件是否成立 条件){
-        List<User> results = new ArrayList<>();
-        for (User user:users
-             ) {
-            if(条件.这个用户是否满足条件(user)){
-                results.add(user);
-            }
-        }
-        return results;
-    }
-
-    //这个接口里面只有一个函数，继承后实现具体的条件
-    private interface 判断条件是否成立 {
-        boolean 这个用户是否满足条件(User user);
-    }
-
-    private static class 判断用户ID是不是偶数 implements 判断条件是否成立 {
-        @Override
-        public boolean 这个用户是否满足条件(User user) {
-            return user.id % 2 == 0;
-        }
-    }
-
     public static void main(String[] args) {
         filterUsersWithEvenId(Arrays.asList(new User(1, "a"), new User(2, "b")));
     }
 
     // 过滤ID为偶数的用户
     public static List<User> filterUsersWithEvenId(List<User> users) {
-        return filter(users, new 判断用户ID是不是偶数());
-//        List<User> results = new ArrayList<>();
-//        for (User user : users) {
-//            if (user.id % 2 == 0) {
-//                results.add(user);
-//            }
-//        }
-//        return results;
+        return filter(users, new Predicate<User>() {
+            @Override
+            public boolean test(User user) {
+                return user.id % 2 == 0;
+            }
+        });
     }
 
     // 过滤姓张的用户
     public static List<User> filterZhangUsers(List<User> users) {
-        List<User> results = new ArrayList<>();
-        for (User user : users) {
-            if (user.name.startsWith("张")) {
-                results.add(user);
+        return filter(users, new Predicate<User>() {
+            @Override
+            public boolean test(User user) {
+                return user.name.startsWith("张");
             }
-        }
-        return results;
+        });
     }
 
     // 过滤姓王的用户
     public static List<User> filterWangUsers(List<User> users) {
+        return filter(users, new Predicate<User>() {
+            @Override
+            public boolean test(User user) {
+                return user.name.startsWith("王");
+            }
+        });
+    }
+    // 你可以发现，在上面三个函数中包含大量的重复代码。
+    // 请尝试通过Predicate接口将上述代码抽取成一个公用的过滤器函数
+    // 并简化上面三个函数
+    public static List<User> filter(List<User> users, Predicate<User> predicate) {
         List<User> results = new ArrayList<>();
-        for (User user : users) {
-            if (user.name.startsWith("王")) {
+        for (User user:users
+             ) {
+            if(predicate.test(user)){
                 results.add(user);
             }
         }
         return results;
     }
-    // 你可以发现，在上面三个函数中包含大量的重复代码。
-    // 请尝试通过Predicate接口将上述代码抽取成一个公用的过滤器函数
-    // 并简化上面三个函数
-//    public static List<User> filter(List<User> users, Predicate<User> predicate) {}
 }
