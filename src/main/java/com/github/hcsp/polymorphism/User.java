@@ -30,10 +30,6 @@ public class User {
         return name;
     }
 
-    public static void main(String[] args) {
-        filterUsersWithEvenId(Arrays.asList(new User(1, "a"), new User(2, "b")));
-    }
-
     // 过滤ID为偶数的用户
     public static List<User> filterUsersWithEvenId(List<User> users) {
         return filter(users, new Predicate<User>() {
