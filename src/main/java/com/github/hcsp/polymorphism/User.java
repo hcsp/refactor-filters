@@ -54,10 +54,11 @@ public class User {
     // 并简化上面三个函数
     public static List<User> filter(List<User> users, Predicate<User> predicate) {
         List<User> results = new ArrayList<>();
-        for (User user : users)
+        for (User user : users) {
             if (predicate.test(user)) {
                 results.add(user);
             }
+        }
         return results;
     }
 }
