@@ -1,6 +1,7 @@
 package com.github.hcsp.polymorphism;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -59,5 +60,67 @@ public class User {
     // 你可以发现，在上面三个函数中包含大量的重复代码。
     // 请尝试通过Predicate接口将上述代码抽取成一个公用的过滤器函数
     // 并简化上面三个函数
-    public static List<User> filter(List<User> users, Predicate<User> predicate) {}
+    public static List<User> filter(List<User> users, Predicate<User> predicate) {
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if(predicate.test(user)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+    public static List<User> filter(List<User> users, 判断条件是否成立 条件) {
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if(条件.isOk(user)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+    static class isEven implements 判断条件是否成立 {
+        @Override
+        public boolean isOk(User user) {
+            return user.id % 2 == 0;
+        }
+    }
+
+    public static void main(String[] args) {
+        List<User> users =
+                Arrays.asList(
+                        new User(1, "王"), new User(2, "张"), new User(3, "张"), new User(4, "d"),
+                        new User(5, "郭"), new User(6, "周"));
+
+        List<User> result0 = filter(users,new isEven());
+        List<User> result1 = filter(users,new 判断条件是否成立(){
+            @Override
+            public boolean isOk(User user) {
+                return user.id % 2 == 0;
+            }
+        });
+        List<User> result2 = filter(users,new 判断条件是否成立(){
+            @Override
+            public boolean isOk(User user) {
+                return user.name.startsWith("张");
+            }
+        });
+        List<User> result3 = filter(users,new 判断条件是否成立(){
+            @Override
+            public boolean isOk(User user) {
+                return user.name.startsWith("王");
+            }
+        });
+        List<User> result4 = filter(users, new Predicate<User>() {
+            @Override
+            public boolean test(User user) {
+                return user.name.startsWith("郭");
+            }
+        });
+        List<User> result5 = filter(users, new Predicate<User>() {
+            @Override
+            public boolean test(User user) {
+                return user.name.startsWith("周") ;
+            }
+        });
+    }
 }
